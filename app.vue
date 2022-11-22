@@ -9,7 +9,12 @@ import { Arena } from './classes/Arena'
 export default {
   mounted() {
     const myCanvas: HTMLCanvasElement = this.$refs.mainCanvas as HTMLCanvasElement
-    new Arena(myCanvas)
+    const arena = new Arena(myCanvas)
+
+    this.$el.addEventListener('mousemove', (event: MouseEvent) => {
+      arena.player1.x = event.clientX
+      arena.player1.y = event.clientY
+    }); 
   },
 }
 </script>

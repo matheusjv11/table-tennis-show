@@ -1,13 +1,14 @@
 export class Racket {
     canvasParent: CanvasRenderingContext2D
-    x: number 
-    y: number
+    public x: number 
+    public y: number
     radius:number = 30
 
     constructor (canvasParent: CanvasRenderingContext2D, x: number, y: number) {
         this.canvasParent = canvasParent
         this.x = x
         this.y = y
+        
     }
 
     public draw() {
