@@ -48,7 +48,6 @@ export default class Calculation {
 
       // Prevent accidental overlap of balls
       if (xVelocityDiff * xDist + yVelocityDiff * yDist >= 0) {
-    
           // Grab angle between the two colliding balls
           const angle = -Math.atan2(racket.y - ball.y, racket.x - ball.x);
     

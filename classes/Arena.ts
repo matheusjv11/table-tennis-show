@@ -27,7 +27,7 @@ export class Arena {
             this.table = new Table(this.canvasCtx)
             this.player = new Racket(this.canvasCtx, 300, 300)
             this.net = new Net(this.canvasCtx, this.table)
-            this.ball = new Ball(this.canvasCtx, this.table, this.player, 400, 300)
+            this.ball = new Ball(this.canvasCtx, this.table, this.net, this.player, 600, 300)
         }
         
         this.animate()

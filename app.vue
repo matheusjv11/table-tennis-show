@@ -35,14 +35,20 @@ export default {
 
         const now = performance.now();
         const timeDelta = now - lastTime;
-        let velocity = distance + distance / timeDelta;
+        let velocityX = distance + distance / timeDelta;
+        let velocityY = distance + distance / timeDelta;
 
-        if (x > arena.player.x || y > arena.player.y) {
-          velocity = -velocity
+        if (x > arena.player.x) {
+          velocityX = -velocityX
         }
 
-        arena.player.velocity.x, arena.player.velocity.y = velocity;
-        
+        if (y > arena.player.y) {
+          velocityY = -velocityY
+        }
+
+        arena.player.velocity.x = velocityX;
+        arena.player.velocity.y = velocityY;
+
         x = arena.player.x;
         y = arena.player.y;
         lastTime = now;
