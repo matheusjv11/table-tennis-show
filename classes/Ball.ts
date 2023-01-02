@@ -17,6 +17,8 @@ export class Ball {
     private radius:number = 10
     private gravity = 0.3
     private friction = 0.78;
+    private verticalCollision: boolean = false;
+
     private canvasParent: CanvasRenderingContext2D
     private table: Table
     private net: Net
@@ -52,9 +54,10 @@ export class Ball {
 
     private detectTableCollision() {
         if (this.touchedTable()) {
-            this.resolveTableCollision();
+            this.y = this.table.y - this.radius
+            this.collision()
         } else if (this.touchedNet()) {
-            this.resolveNetCollision();
+            this.collision()
         } else {
             this.velocity.y += this.gravity
         }
@@ -67,6 +70,8 @@ export class Ball {
     }
 
     private touchedTable (): boolean {
+        this.verticalCollision = true
+
         return Math.floor(this.table.y) < (this.y + this.radius) &&
             this.x > this.table.x &&
             this.x < this.table.x + this.table.width
@@ -80,47 +85,44 @@ export class Ball {
             this.x < this.net.x + this.net.width
         ) {
             this.y = this.net.y - this.radius
+            this.verticalCollision = true
+
             return true
         }
 
         // Left 
         if (
-            Math.floor(this.net.x) < (this.x + this.radius) &&
+            Math.floor(this.net.x) <= (this.x + this.radius) &&
             this.net.x + this.net.width > (this.x + this.radius) &&
             this.y > this.net.y &&
-            this.y < this.net.y + this.net.heigt
+            this.y < this.net.y + this.net.heigt && 
+            this.velocity.x > 0
         ) {
             this.x = this.net.x - this.radius
+            this.verticalCollision = false
+
             return true
         }
 
-        console.log(Calculation.getDistance(this.x, this.y, this.net.x, this.net.y))
- 
         // Right 
-/*         if (
-            Math.floor(this.net.x + this.net.width ) > (this.x + this.radius) &&
+        if (
+            Math.floor(this.net.x + this.net.width * 3) >= (this.x + this.radius) &&
+            Math.floor(this.net.x) < (this.x + this.radius) &&
             this.y > this.net.y &&
-            this.y < this.net.y + this.net.heigt
+            this.y < this.net.y + this.net.heigt && 
+            this.velocity.x < 0
         ) {
-            this.x = (this.net.x + this.net.width) + this.radius
+            this.x = (this.net.x + this.net.width * 3) - this.radius
+            this.verticalCollision = false
             
-            return true
-        }  */
+            return true 
+        } 
 
         return false
     }
 
-    private resolveTableCollision (): void {
-        this.y = this.table.y - this.radius
-        this.collision()
-    } 
-
-    private resolveNetCollision (): void {
-        this.collision(false)
-    }
-
-    private collision (vertical: boolean = true): void {
-        if (vertical) {
+    private collision (): void {
+        if (this.verticalCollision) {
             this.velocity.y = -this.velocity.y
         } else {
             this.velocity.x = -this.velocity.x
