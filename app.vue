@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h1 class="alert__header">
+      Still in Progress...
+    </h1>
     <canvas ref="mainCanvas" id="mainCanvas"></canvas>
   </div>
 </template>
@@ -12,6 +15,7 @@ export default {
     let arena = new Arena(myCanvas)
 
     this.initMouseEvents(arena)
+    this.initServer()
 
     window.addEventListener('resize', () => {
       arena = new Arena(myCanvas)
@@ -53,6 +57,15 @@ export default {
         y = arena.player.y;
         lastTime = now;
       }); 
+    },
+
+    initServer() {
+/*       let connection = new WebSocket('wss:');
+
+      connection.onopen = (event) => {
+        console.log(event)
+        console.log('oi connectei')
+      } */
     }
   }
 }
@@ -67,5 +80,14 @@ body, html { height:100%; }
   position:absolute;
   width:100%;
   height:100%;
+}
+
+.alert__header {
+  position: absolute; 
+  left: 0; 
+  right: 0; 
+  text-align: center;
+  padding: 2rem;
+
 }
 </style>

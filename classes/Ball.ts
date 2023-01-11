@@ -43,6 +43,7 @@ export class Ball {
         this.canvasParent.fill()
 
         this.updatePosition()
+        this.detectOutsideBall();
         this.detectTableCollision()
         this.detectRacketCollision()
     }
@@ -50,6 +51,20 @@ export class Ball {
     private updatePosition () { 
         this.y += this.velocity.y
         this.x += this.velocity.x
+    }
+
+    private detectOutsideBall () { 
+        if (
+            this.x + this.radius < 0 ||
+            this.x + this.radius > innerWidth ||
+            this.y + this.radius > innerHeight ||
+            this.y + this.radius < 0
+            ) {
+            this.x = 600
+            this.y = 300
+            this.velocity.x = 0
+            this.velocity.y = 1
+        }
     }
 
     private detectTableCollision() {
